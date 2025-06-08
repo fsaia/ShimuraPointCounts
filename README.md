@@ -3,7 +3,7 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 ## Main Files
 
-- `aut_checks.m`: Code with checks on the automorphism group of curves $X_0^D(N)$, and their Atkin--Lehner quotients, having genus $g>1$ and $D>1$. The main functions are `no_involutions.m`, which assumes $DN$ is even and uses point coints to attempt a sufficient check for $X_0^D(N)^*$ to have no involutions in its automorphism group, and `all_atkin_lehner_KR`, which assumes $N$ is squarefree and coprime to $D$ and uses point counts and results of Kontogeorgis--Rotger to prove that all non-trivial automorphisms of $X_0^D(N)$ are Atkin--Lehner involutions. This file requires either `point_counts_10k.m` or `point_counts_all_traces.m` if using these two main functions, and one can change which file is loaded in by commenting and uncommenting the relevant lines at the beginning.
+- `aut_checks.m`: Code with checks on the automorphism group of curves $X_0^D(N)$, and their Atkin--Lehner quotients, having genus $g>1$ and $D>1$. The main functions are `no_involutions.m`, which assumes $DN$ is even and uses point coints to attempt a sufficient check for $X_0^D(N)^*$ to have no involutions in its automorphism group, and `all_atkin_lehner_KR`, which assumes $N$ is squarefree and coprime to $D$ and uses point counts and results of Kontogeorgis--Rotger to prove that all non-trivial automorphisms of $X_0^D(N)$ are Atkin--Lehner involutions. This file requires `point_counts_10k.m` if using these two main functions. Note that the full strength of our main theorem on Automorphism groups of $X_0^D(N)$ and its Atkin--Lehner quotients cannot be obtained just using the trace data in `traces10k.m`; one needs more data which is available on the LMFDB but we do not include the file here due to its size. 
 
 - `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus.
   
@@ -16,11 +16,9 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 - `AL_identifiers.m`: Code for working with Atkin--Lehner subgroups of the automorphisms group of $X_0^D(N)$. In particular, this file contains code for going between lists of all elements of a subgroup and minimal length lists of generators, and for listing all subgroups of the Atkin--Lehner group $W_0(D,N)$. This file is needed for `tetragonal_checks.m` and `tetragonal_sieving.m`.
 
-- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file is needed for `point_counts_10k.m`, and so either this file or `tracesALL.m` is needed for `aut_checks.m`.
+- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file is needed for `point_counts_10k.m`.
 
-- `point_counts_10k.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. This version loads in trace data from `traces10k.m`, and allows for roughly $DN < 14000$. This file is needed for `tetragonal_sieving.m`, and this file or `point_counts_all_traces.m` is needed for `aut_checks.m`. 
-
--  `point_counts_all_traces.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. This version loads in trace data from `traces_ALL.m`, and allows for roughly $DN < 10000$. This file or `point_counts_10k.m` is needed for `aut_checks.m` (and specifically this version is needed for our main theorem on automorphism groups of $X_0^D(N)$ and its Atkin--Lehner quotients). 
+- `point_counts_10k.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. This version loads in trace data from `traces10k.m`, and allows for roughly $DN < 14000$. This file is needed for `aut_checks.m` and `tetragonal_sieving.m`.
 
 -  `known_gonalities.m`: Known lists of coprime pairs $(D,N)$ with $D>1$ so that the curve $X_0^D(N)$ has genus $0$ or $1$ or has gonality over $\mathbb{Q}$ or geometric gonality at most 3. This file is needed for `tetragonal_checks.m` and `tetragonal_sieving.m`.
 
