@@ -7,7 +7,7 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 - `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus.
   
-- `tetragonal_sieving.m`:
+- `tetragonal_sieving.m`: We use various information and techniques (including genus computations, known gonalities, Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically) or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically). 
 
 
 ## Required Files
@@ -16,7 +16,7 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 - `AL_identifiers.m`: Code for working with Atkin--Lehner subgroups of the automorphisms group of $X_0^D(N)$. In particular, this file contains code for going between lists of all elements of a subgroup and minimal length lists of generators, and for listing all subgroups of the Atkin--Lehner group $W_0(D,N)$. This file is needed for `tetragonal_checks.m` and `tetragonal_sieving.m`.
 
-- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10k$ from the LMFDB. This file is needed for `point_counts_10k.m`, and so either this file or `tracesALL.m` is needed for `aut_checks.m`.
+- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file is needed for `point_counts_10k.m`, and so either this file or `tracesALL.m` is needed for `aut_checks.m`.
 
 - `point_counts_10k.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. This version loads in trace data from `traces10k.m`, and allows for roughly $DN < 14000$. This file is needed for `tetragonal_sieving.m`, and this file or `point_counts_all_traces.m` is needed for `aut_checks.m`. 
 
@@ -31,7 +31,7 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 ## Computed Lists
 
-- `no_involution_star_pairs_10k.m`: // List of all $4378$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we prove that $X_0^D(N)^*$ has no non-trivial involutions using just point counts with the result of Gonzalez (and not using additional results from Kontogeorgis--Rotger). Computed in `aut_checks.m`.
+- `no_involution_star_pairs_10k.m`: List of all $4378$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we prove that $X_0^D(N)^*$ has no non-trivial involutions using just point counts with the result of González (and not using additional results from Kontogeorgis--Rotger). Computed in `aut_checks.m`.
   
 - `all_atkin_lehner_10k.m`: List of all $4718$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)/W$ are Atkin--Lehner for each $W \leq W_0(D,N)$. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.
 
