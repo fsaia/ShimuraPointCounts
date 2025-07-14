@@ -3,11 +3,13 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 ## Main Files
 
-- `aut_checks.m`: Code with checks on the automorphism group of curves $X_0^D(N)$, and their Atkin--Lehner quotients, having genus $g>1$ and $D>1$. The main functions are `no_involutions.m`, which assumes $DN$ is even and uses point coints to attempt a sufficient check for $X_0^D(N)^*$ to have no involutions in its automorphism group, and `all_atkin_lehner_KR`, which assumes $N$ is squarefree and coprime to $D$ and uses point counts and results of Kontogeorgis--Rotger to prove that all non-trivial automorphisms of $X_0^D(N)$ are Atkin--Lehner involutions. This file requires `point_counts_10k.m` if using these two main functions. Note that the full strength of our main theorem on Automorphism groups of $X_0^D(N)$ and its Atkin--Lehner quotients cannot be obtained just using the trace data in `traces10k.m`; one needs more data which is available on the LMFDB but we do not include the file here due to its size. 
+- `counting_points.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. There are two ways to run the main function: you can either compute relevant Hecke trace data from scratch as part of the data using the included function, or can load in pre-computed data in the form specified for input for the main function. For the later files we load in trace data from `traces10k.m`, obtained from the LMFDB, which allows for roughly $DN < 14000$. This file is needed for `aut_checks.m` and `tetragonal_sieving.m`.
+
+- `aut_checks.m`: Code with checks on the automorphism group of curves $X_0^D(N)$, and their Atkin--Lehner quotients, having genus $g>1$ and $D>1$. The main functions are `no_involutions.m`, which assumes $DN$ is even and uses point coints to attempt a sufficient check for $X_0^D(N)^*$ to have no involutions in its automorphism group, and `all_atkin_lehner_KR`, which assumes $N$ is squarefree and coprime to $D$ and uses point counts and results of Kontogeorgis--Rotger to prove that all non-trivial automorphisms of $X_0^D(N)$ are Atkin--Lehner involutions. This file requires `counting_points.m` if using these two main functions. Note that the full strength of our main theorem on Automorphism groups of $X_0^D(N)$ and its Atkin--Lehner quotients cannot be obtained just using the trace data in `traces10k.m`; one needs more data which is available on the LMFDB but we do not include the file here due to its size. 
 
 - `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus.
   
-- `tetragonal_sieving.m`: We use various information and techniques (including genus computations, known gonalities, Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically) or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically). 
+- `tetragonal_sieving.m`: We use various information and techniques (including genus computations, known gonalities, Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically) or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically).
 
 
 ## Required Files
@@ -16,9 +18,7 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 - `AL_identifiers.m`: Code for working with Atkin--Lehner subgroups of the automorphisms group of $X_0^D(N)$. In particular, this file contains code for going between lists of all elements of a subgroup and minimal length lists of generators, and for listing all subgroups of the Atkin--Lehner group $W_0(D,N)$. This file is needed for `tetragonal_checks.m` and `tetragonal_sieving.m`.
 
-- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file is needed for `point_counts_10k.m`.
-
-- `point_counts_10k.m`: Code for computing point counts on $X_0^D(N)$ and its Atkin--Lehner quotients over finite fields. This version loads in trace data from `traces10k.m`, and allows for roughly $DN < 14000$. This file is needed for `aut_checks.m` and `tetragonal_sieving.m`.
+- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file helps speed up use of the main function in `counting_points.m`.
 
 -  `known_gonalities.m`: Known lists of coprime pairs $(D,N)$ with $D>1$ so that the curve $X_0^D(N)$ has genus $0$ or $1$ or has gonality over $\mathbb{Q}$ or geometric gonality at most 3. This file is needed for `tetragonal_checks.m` and `tetragonal_sieving.m`.
 
@@ -39,4 +39,8 @@ Magma code for the paper "Point counts of Shimura curves over finite fields" by 
 
 - `remaining_geom_tetragonal_candidates.m`: All $10$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`. 
 
-- `remaining_tetragonal_candidates.m`: All $29$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`. 
+- `remaining_tetragonal_candidates.m`: All $29$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
+
+- `geom_tetragonal_pairs.m`: List of all $161$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is geometrically tetragonal. If $X_0^D(N)$ is geometrically tetragonal and is not in this list, then $(D,N)$ must be among the $10$ pairs listed in the file `remaining_geom_tetragonal_candidates.m`.
+
+- `tetragonal_pairs.m`: List of all $142$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. If $X_0^D(N)$ is tetragonal over $\mathbb{Q}$ and is not in this list, then $(D,N)$ must be among the $29$ pairs listed in the file `remaining_tetragonal_candidates.m`.
