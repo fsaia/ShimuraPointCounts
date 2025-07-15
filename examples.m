@@ -1,6 +1,6 @@
 
 
-// Before run counting_points.txt
+// Before run counting_points.m
 
 
 // Example 1: X_0^{15}(16)/<w_5> over F_{13^i} for i = 1,...,5
