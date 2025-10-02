@@ -1,12 +1,7 @@
-// We use various information and techniques (including genus computations, known gonalities, 
-// Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for 
-// rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in 
-// `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically)
-// or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically). 
-
 // List of all 516 geometrically tetragonal candidate pairs (see the file tetragonal_checks.m for
 // the definition). 
 load "tetragonal_candidates.m";
+
 
 // loading quot_genus.m, which contains the genus(D,N) function for the genus of X_0^D(N)
 load "quot_genus.m";
@@ -14,6 +9,7 @@ load "quot_genus.m";
 // loading AL_identifiers.m, which contains code for working with unique identifiers 
 // for each subgroup of the full Atkin--Lehner group W_0(D,N) of X_0^D(N). 
 load "AL_identifiers.m";
+
 
 // loading known_gonalities lists
 load "known_gonalities.m";
@@ -721,6 +717,12 @@ end for;
 // (10,9) is tetragonal over \Q by Prop. 4.27 of Nualart-Riera's thesis. 
 Exclude(~remaining_tetragonal_candidates,[10,9]);
 
+// 9 pairs found to not be tetragonal over \Q using local points algorithm
+// of Padurariu--Saia 2025
+for pair in [[6,55],[6,77],[6,83],[10,33],[14,15],[14,23],[21,13],[22,19],[86,3]] do
+    Exclude(~remaining_tetragonal_candidates,);
+end for; 
+
 
 // SetOutputFile("remaining_geom_tetragonal_candidates.m");
 // print "remaining_geom_tetragonal_candidates := ";
@@ -1020,7 +1022,7 @@ Exclude(~remaining_tetragonal_candidates,[10,9]);
 
     // SetOutputFile("table_remaining_geom_tetragonal_candidates.m");
 
-    // for i in [1..3] do 
+    // for i in [1..10] do 
     //     for j in [1..3] do
     //         pair := remaining_geom_tetragonal_candidates[3*(i-1)+j];
     //         D := pair[1];
@@ -1053,7 +1055,7 @@ Exclude(~remaining_tetragonal_candidates,[10,9]);
     // remaining_tetragonal_candidates_only := [pair : pair in remaining_tetragonal_candidates | not (pair in remaining_geom_tetragonal_candidates)];
     // SetOutputFile("table_remaining_tetragonal_candidates.m");
 
-    // for i in [1..6] do 
+    // for i in [1..3] do 
     //     for j in [1..3] do
     //         pair := remaining_tetragonal_candidates_only[3*(i-1)+j];
     //         D := pair[1];
