@@ -39,7 +39,7 @@ Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura
 
 - `remaining_geom_tetragonal_candidates.m`: All $10$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`. 
 
-- `remaining_tetragonal_candidates.m`: All $29$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
+- `remaining_tetragonal_candidates.m`: All $20$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
 
 - `geom_tetragonal_pairs.m`: List of all $161$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is geometrically tetragonal. If $X_0^D(N)$ is geometrically tetragonal and is not in this list, then $(D,N)$ must be among the $10$ pairs listed in the file `remaining_geom_tetragonal_candidates.m`.
 
