@@ -438,11 +438,11 @@ for pair in [pair : pair in geom_tetragonal_by_AL | (pair in remaining_tetragona
             end for; 
 
             // Now we use GRO6 Cor. 5.14 (2) to determine rationality of image points
-            // note: d_R in {-12,-16,-27} give false info, as these aren't the correct
-            // orders to attach in GR06's framework. We lose nothing by ignoring these orders,
+            // note: d_R in {-60} gives false info, as this isn't the correct
+            // order to attach in GR06's framework. We lose nothing by ignoring this orders,
             // as if we actually have fixed points of these orders we have fixed points of 
-            // order -3 or -4.
-            if (Q eq 1)  then 
+            // order -15.
+            if ((D_R*N_star_R eq 1) and (Q eq 1)) and (not (disc_R in [-60]))   then 
                 Append(~m_points_info,[*d_K,pt[2],f_R,pt[4]*]);
             end if; 
         end for;
@@ -469,11 +469,11 @@ for pair in [pair : pair in geom_tetragonal_by_AL | (pair in remaining_tetragona
             end for; 
 
             // Now we use GRO6 Cor. 5.14 (1) to determine rationality of image points
-            // note: d_R in {-12,-16,-27} give false info, as these aren't the correct
+            // note: d_R in {-12,-16,-27, -28} give false info, as these aren't the correct
             // orders to attach in GR06's framework. We lose nothing by ignoring these orders,
             // as if we actually have fixed points of these orders we have fixed points of 
             // order -3 or -4.
-            if ((Q eq D_R*N_star_R) and (not (disc_R in [-12,-16,-27]))) then
+            if ((Q eq D_R*N_star_R) and (not (disc_R in [-12,-16,-27,-28]))) then
                 Append(~m_points_info,[*d_K,pt[2],f_R,pt[4]*]);
             end if; 
         end for;
