@@ -1,5 +1,5 @@
 # ShimuraPointCounts
-Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura curves* by Pietro Mercuri, Oana Padurariu, Frederick Saia, and Claudio Stirpe ([arXiv:2507.15992](https://arxiv.org/abs/2507.15992)). 
+Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura curves* by Pietro Mercuri, Oana Padurariu, Frederick Saia, and Claudio Stirpe ([arXiv:2507.15992](https://arxiv.org/abs/2507.15992))
 
 ## Main Files
 
