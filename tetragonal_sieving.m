@@ -1,7 +1,12 @@
+// We use various information and techniques (including genus computations, known gonalities, 
+// Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for 
+// rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in 
+// `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically)
+// or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically). 
+
 // List of all 516 geometrically tetragonal candidate pairs (see the file tetragonal_checks.m for
 // the definition). 
 load "tetragonal_candidates.m";
-
 
 // loading quot_genus.m, which contains the genus(D,N) function for the genus of X_0^D(N)
 load "quot_genus.m";
@@ -10,12 +15,11 @@ load "quot_genus.m";
 // for each subgroup of the full Atkin--Lehner group W_0(D,N) of X_0^D(N). 
 load "AL_identifiers.m";
 
-
 // loading known_gonalities lists
 load "known_gonalities.m";
 
 // loading finite field point counts code
-load "point_counts_10k.m";
+load "counting_points.m";
 
 // Loading list of some pairs which we know have no
 // involutions other than the Atkin--Lehner involutions 
@@ -105,8 +109,9 @@ for pair in tetragonal_candidates do
                         Plist := PrimeDivisors(D*N);
                         m1_list := [Index(Plist,p) : p in PrimeDivisors(m1)];
                         for p in [p : p in PrimesUpTo(23) | not (p in Plist)] do // primes of good reduction for X_0^D(N)/<w_m1>. Increasing this to 100 seems to give no benefit
+                            g, counts := shipoints(p, D, N, traces_to_forms(dataByLevel, p, D, N) : ALprimes:=[Seqset(m1_list)], m:=2, eps:=3);
                             for r in [1,2] do
-                                point_count := shiALpoints(p,r,D,N,[{},Seqset(m1_list)]);
+                                point_count := counts[r];
                                 if point_count gt 2*p^r+2 then 
                                     point_count_check := false;
                                     break;
@@ -236,8 +241,9 @@ for pair in remaining_geom_tetragonal_candidates do
         q_found := false; // set to true if we find a q such that the bound from the lemma succeeds
 
         for p in [p : p in PrimesUpTo(100) | not (p in PrimeDivisors(D*N))] do // primes up to 100 of good reduction for X_0^D(N)
-            for i in [1..7] do
-                point_count := shiALpoints(p,i,D,N,[{},{}]); // #X_0^D(N)(F_{p^i})
+            g, counts := shipoints(p,D,N,traces_to_forms(dataByLevel, p, D, N) : ALprimes:=[{}], m:=3, eps:=5);
+            for i in [1..3] do
+                point_count := counts[i];
                 if point_count gt 4*p^i+4 then // this implies X_0^D(N) is not geom. bi-hyperelliptic
                     q_found := true;
                     Append(~not_geom_tetragonal_by_bihyperelliptic_lemma,pair);
@@ -303,8 +309,9 @@ for pair in remaining_tetragonal_candidates do
     excluded_check := false;
 
     for p in [p : p in PrimesUpTo(100) | not (p in PrimeDivisors(D*N))] do
-        for i in [1..7] do
-            if shiALpoints(p,i,D,N,[{},{}]) gt 4*p^i+4 then // point count check to exclude being tetragonal over \Q
+        g, counts := shipoints(p,D,N,traces_to_forms(dataByLevel, p, D, N) : ALprimes:=[{}], m:=3, eps:=3);
+        for i in [1..3] do
+            if counts[i] gt 4*p^i+4 then // point count check to exclude being tetragonal over \Q
                 excluded_check := true; 
                 Append(~not_tetragonal_by_point_counts,pair);
                 Exclude(~remaining_tetragonal_candidates,pair);
@@ -717,10 +724,14 @@ end for;
 // (10,9) is tetragonal over \Q by Prop. 4.27 of Nualart-Riera's thesis. 
 Exclude(~remaining_tetragonal_candidates,[10,9]);
 
+// (51,2) is tetragonal over \Q; an equation for the genus 2 quotient is given
+// in Padurariu--Saia 2025 showing it is hyperelliptic over \Q
+Exclude(~remaining_tetragonal_candidates,[51,2]);
+
 // 9 pairs found to not be tetragonal over \Q using local points algorithm
 // of Padurariu--Saia 2025
 for pair in [[6,55],[6,77],[6,83],[10,33],[14,15],[14,23],[21,13],[22,19],[86,3]] do
-    Exclude(~remaining_tetragonal_candidates,);
+    Exclude(~remaining_tetragonal_candidates,pair);
 end for; 
 
 
@@ -735,6 +746,24 @@ end for;
 // remaining_tetragonal_candidates;
 // print ";"; 
 // UnsetOutputFile(); 
+
+
+// SetOutputFile("geom_tetragonal_pairs.m");
+// print "geom_tetragonal_pairs := ";
+// Sort(~geom_tetragonal_by_AL);
+// geom_tetragonal_by_AL;
+// print ";";
+// UnsetOutputFile();
+
+
+// SetOutputFile("tetragonal_pairs.m");
+// tetragonal_pairs := [pair : pair in tetragonal_candidates | (((pair in tetragonal_by_hyperelliptic) or (pair in tetragonal_by_bielliptic)) or (pair in tetragonal_by_CM)) or (pair in tetragonal_by_2_to_hyperelliptic)];
+// Append(~tetragonal_pairs,[10,9]);
+// print "tetragonal_pairs := ";
+// Sort(~tetragonal_pairs);
+// tetragonal_pairs;
+// print ";";
+// UnsetOutputFile();
    
 
 
@@ -771,7 +800,7 @@ end for;
 //         print m_min, "$ & $", g_2quot_min, "$";
 
 //         if j eq 2 then 
-//             print "\\ \hline";
+//             print "\\\\ \\hline";
 //         else 
 //             print " & "; 
 //         end if;
@@ -797,7 +826,7 @@ end for;
 //     end if;
 // end for; 
 
-// print m_min, "$ & $", g_2quot_min, "$ & & & \\ \hline"; 
+// print m_min, "$ & $", g_2quot_min, "$ & & & \\\\ \\hline"; 
 // UnsetOutputFile();
 
 
@@ -831,7 +860,7 @@ end for;
     //         end for;
 
     //         if j eq 3 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -870,7 +899,7 @@ end for;
     //         print m_min, "$ & $", gtop, "$ & $", g_2quot_min, "$";
 
     //         if j eq 3 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -896,7 +925,7 @@ end for;
     //     end if;
     // end for; 
 
-    // print m_min, "$ & $", gtop, "$ & $", g_2quot_min, "$ & & & & & & & & \\ \hline";
+    // print m_min, "$ & $", gtop, "$ & $", g_2quot_min, "$ & & & & & & & & \\\\ \\hline";
     // UnsetOutputFile();
 
 
@@ -921,34 +950,12 @@ end for;
     //         print m, "$ & $", Delta, "$";
 
     //         if j eq 3 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
     //     end for;
     // end for; 
-
-    // // final row, 1st entry
-    // info := tetragonal_by_CM_with_info[82];
-    // pair := info[1];
-    // D := pair[1];
-    // N := pair[2];
-    // print "$ (";
-    // print D, ",", N, ")$ & $";
-    // m := info[3][1][1];
-    // Delta := info[3][1][2][1][1]; // first CM discriminant in list of rational pts info
-    // print m, "$ & $", Delta, "$ & ";
-
-    // // final row, 2nd entry
-    // info := tetragonal_by_CM_with_info[83];
-    // pair := info[1];
-    // D := pair[1];
-    // N := pair[2];
-    // print "$ (";
-    // print D, ",", N, ")$ & $";
-    // m := info[3][1][1];
-    // Delta := info[3][1][2][1][1]; // first CM discriminant in list of rational pts info
-    // print m, "$ & $", Delta, "$ & & & \\ \hline";
 
     // UnsetOutputFile();
 
@@ -967,7 +974,7 @@ end for;
     //         print D, ",", N, ")$";
 
     //         if j eq 4 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -980,7 +987,7 @@ end for;
     // D := pair[1];
     // N := pair[2];
     // print "$ (";
-    // print D, ",", N, ")$ & & & \\ \hline";
+    // print D, ",", N, ")$ & & & \\\\ \\hline";
 
     // UnsetOutputFile();
 
@@ -1000,7 +1007,7 @@ end for;
     //         print D, ",", N, ")$ & ", q, " & ", count;
 
     //         if j eq 2 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -1014,7 +1021,7 @@ end for;
     // q := curve_info[3];
     // count := curve_info[4];
     // print "$ (";
-    // print D, ",", N, ")$ & ", q, " & ", count, " & & & \\ \hline";
+    // print D, ",", N, ")$ & ", q, " & ", count, " & & & \\\\ \\hline";
     // UnsetOutputFile();
 
 
@@ -1022,7 +1029,7 @@ end for;
 
     // SetOutputFile("table_remaining_geom_tetragonal_candidates.m");
 
-    // for i in [1..10] do 
+    // for i in [1..3] do 
     //     for j in [1..3] do
     //         pair := remaining_geom_tetragonal_candidates[3*(i-1)+j];
     //         D := pair[1];
@@ -1032,7 +1039,7 @@ end for;
     //         print D, ",", N, ")$ & $", g, "$";
 
     //         if j eq 3 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -1045,7 +1052,7 @@ end for;
     // N := pair[2];
     // g := genus(D,N); 
     // print "$ (";
-    // print D, ",", N, ")$ & $ ", g, "$ & & & & \\ \hline";
+    // print D, ",", N, ")$ & $ ", g, "$ & & & & \\\\ \\hline";
 
     // UnsetOutputFile();
 
@@ -1055,7 +1062,7 @@ end for;
     // remaining_tetragonal_candidates_only := [pair : pair in remaining_tetragonal_candidates | not (pair in remaining_geom_tetragonal_candidates)];
     // SetOutputFile("table_remaining_tetragonal_candidates.m");
 
-    // for i in [1..3] do 
+    // for i in [1..6] do 
     //     for j in [1..3] do
     //         pair := remaining_tetragonal_candidates_only[3*(i-1)+j];
     //         D := pair[1];
@@ -1065,7 +1072,7 @@ end for;
     //         print D, ",", N, ")$ & $", g, "$";
 
     //         if j eq 3 then 
-    //             print "\\ \hline";
+    //             print "\\\\ \\hline";
     //         else 
     //             print " & "; 
     //         end if;
@@ -1078,7 +1085,7 @@ end for;
     // N := pair[2];
     // g := genus(D,N); 
     // print "$ (";
-    // print D, ",", N, ")$ & $", g, "$ & & & & \\ \hline";
+    // print D, ",", N, ")$ & $", g, "$ & & & & \\\\ \\hline";
 
     // UnsetOutputFile();
 
