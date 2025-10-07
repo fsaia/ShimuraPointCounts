@@ -747,7 +747,6 @@ end for;
 // print ";"; 
 // UnsetOutputFile(); 
 
-
 // SetOutputFile("geom_tetragonal_pairs.m");
 // print "geom_tetragonal_pairs := ";
 // Sort(~geom_tetragonal_by_AL);
@@ -759,13 +758,13 @@ end for;
 // SetOutputFile("tetragonal_pairs.m");
 // tetragonal_pairs := [pair : pair in tetragonal_candidates | (((pair in tetragonal_by_hyperelliptic) or (pair in tetragonal_by_bielliptic)) or (pair in tetragonal_by_CM)) or (pair in tetragonal_by_2_to_hyperelliptic)];
 // Append(~tetragonal_pairs,[10,9]);
+// Append(~tetragonal_pairs,[51,2]);
 // print "tetragonal_pairs := ";
 // Sort(~tetragonal_pairs);
 // tetragonal_pairs;
 // print ";";
 // UnsetOutputFile();
    
-
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
