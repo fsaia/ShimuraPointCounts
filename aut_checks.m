@@ -1,5 +1,5 @@
 // load "point_counts_all_traces.m"; // version that loads large list of data on forms
-load "point_counts_10k.m"; // version that load smaller list of data on forms
+load "counting_points.m"; // version that load smaller list of data on forms
 load "quot_genus.m";
 
 start_time := Cputime();
@@ -25,7 +25,7 @@ no_involutions := function(D,N,imax)
     assert D*N mod 2 eq 1;
     star_gens := [{i} : i in [1..#PrimeDivisors(D*N)]];
 
-    counts, g_star := shirec(2,D,N,star_gens : m := imax);
+    gstar, counts := shipoints(2, D, N, traces_to_forms(dataByLevel, 2, D, N) : ALprimes:=star_gens, m:=imax, eps:=3);
     assert g_star ge 2;
     sum_upper_bound := 2*g_star+2; 
 
@@ -172,12 +172,11 @@ end function;
 
 
 
-
     // no_involution_star_pairs := [];
 
     // level_bound := 10000; 
 
-    // // List of odd imaginary quadratic discriminants D>1 up to level_bound 
+    // List of odd imaginary quadratic discriminants D>1 up to level_bound 
 
     // pairs_up_to_bound := [];
 
