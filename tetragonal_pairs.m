@@ -1,7 +1,6 @@
-// List of all 142 pairs (D,N) for which we prove X_0^D(N) is tetragonal over \mathbb{Q}.
+// List of all 141 pairs (D,N) for which we prove X_0^D(N) is tetragonal over \mathbb{Q}.
 // If X_0^D(N) is tetragonal over \mathbb{Q} and is *not* in this list, then (D,N) must be among the 
-// 19 pairs listed in the file remaining_tetragonal_candidates.m or among the 10 pairs
-// listed in the file remaining_geom_tetragonal_candidates.m.
+// 21 pairs listed in the file remaining_tetragonal_candidates.m.
 
 tetragonal_pairs := 
 [
@@ -106,7 +105,6 @@ tetragonal_pairs :=
     [ 93, 2 ],
     [ 94, 1 ],
     [ 95, 1 ],
-    [ 95, 2 ],
     [ 106, 1 ],
     [ 111, 1 ],
     [ 115, 1 ],
