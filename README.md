@@ -29,17 +29,19 @@ Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura
 
 ## Computed Lists
 
-- `no_involution_star_pairs_10k.m`: List of all $4378$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we prove that $X_0^D(N)^*$ has no non-trivial involutions using just point counts with the result of González (and not using additional results from Kontogeorgis--Rotger). Computed in `aut_checks.m`.
-  
-- `all_atkin_lehner_10k.m`: List of all $4718$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)/W$ are Atkin--Lehner for each $W \leq W_0(D,N)$. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.
+- `no_involution_star_pairs_10k.m`: List of all $4378$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we prove that $X_0^D(N)^*$ has no non-trivial involutions using point counts with the result of González. Computed in `aut_checks.m`.
 
-- `unknown_aut_pairs_10k.m`: List of all $112$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have not yet determined whether $X_0^D(N)^*$ has a non-trivial involution. Computed in `aut_checks.m`.
+- `unknown_aut_pairs_stars_10k.m`: List of all $452$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have not yet determined whether $X_0^D(N)^*$ has a non-trivial involution. Computed in `aut_checks.m`.
+
+- `all_atkin_lehner_10k.m`: List of all $4718$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)$ are Atkin--Lehner. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.
+
+- `unknown_aut_pairs_10k.m`: List of all $112$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have not yet determined whether $X_0^D(N)$ has a non-Atkin--Lehner involution. Computed in `aut_checks.m`.
 
 - `tetragonal_candidates.m`: List of all $516$ geometrically tetragonal candidate pairs computed in `tetragonal_checks.m`. This file is needed in `tetragonal_sieving.m`.
 
-- `remaining_geom_tetragonal_candidates.m`: All $10$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`. 
+- `remaining_geom_tetragonal_candidates.m`: All $21$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`. 
 
-- `remaining_tetragonal_candidates.m`: All $21$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
+- `remaining_tetragonal_candidates.m`: All $32$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
 
 - `geom_tetragonal_pairs.m`: List of all $161$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is geometrically tetragonal. If $X_0^D(N)$ is geometrically tetragonal and is not in this list, then $(D,N)$ must be among the $10$ pairs listed in the file `remaining_geom_tetragonal_candidates.m`.
 
