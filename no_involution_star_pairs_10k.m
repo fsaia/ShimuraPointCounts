@@ -1,8 +1,7 @@
 // List of all 4378 of the 4830 pairs (D,N) with D>1 an indefinite quaternion discriminant, N
 // a positive integer which is squarefree and coprime to D, D*N odd, and DN < 10000 for which
 // we prove that X_0^D(N)^* has no non-trivial involutions
-// using just point counts with the result of Gonzalez (and not using additional
-// results from Kontogeorgis--Rotger).
+// using point counts with the result of Gonzalez.
 
 no_involution_star_pairs_10k :=  [
     [ 15, 53 ],

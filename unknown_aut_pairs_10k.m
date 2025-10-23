@@ -1,6 +1,6 @@
 // List of all 112 of the 4830 pairs (D,N) with D>1 an indefinite quaternion discriminant, N
 // a positive integer which is squarefree and coprime to D, D*N odd, and DN < 10000 for which
-// we have not yet determined whether X_0^D(N)^* has a non-trivial involution.
+// we have not yet determined whether X_0^D(N) has a non-Atkin--Lehner involution.
 
 unknown_aut_pairs_10k :=  [
     [ 21, 29 ],
@@ -117,38 +117,4 @@ unknown_aut_pairs_10k :=  [
     [ 9989, 1 ]
 ]
 ;
-
-
-// Print table for paper
-    // load "quot_genus.m";
-
-    // // Hall_Divisors : given positive integer N, returns sequence of all Hall Divisors d || N. 
-    // HallDivisors := function(N)
-    //     assert N ge 1;
-    //     return [d : d in Divisors(N) | GCD(d,Integers()!(N/d)) eq 1];
-    // end function;
-
-    // SetOutputFile("table_unknown_aut.m");
-
-    // for i in [1..56] do 
-    //     for j in [1..2] do
-            
-    //         pair := unknown_aut_pairs_10k[2*(i-1)+j];
-    //         D := pair[1];
-    //         N := pair[2];
-    //         g := genus(D,N); 
-    //         gstar := quot_genus(D,N,HallDivisors(D*N)); 
-
-    //         print "$ (", D, ",", N, ")$ & $", g, "$ & $", gstar, "$";
-
-    //         if j eq 2 then 
-    //             print "\\ \hline";
-    //         else 
-    //             print " & "; 
-    //         end if;
-    //     end for;
-    // end for; 
-
-    // UnsetOutputFile();
-
 

@@ -21,9 +21,14 @@ load "known_gonalities.m";
 // loading finite field point counts code
 load "counting_points.m";
 
-// Loading list of some pairs which we know have no
+// Loading list of pairs which we know X_0^D(N) has no
 // involutions other than the Atkin--Lehner involutions 
 load "all_atkin_lehner_10k.m";
+
+// Loading list of pairs which we know all quotients
+// X_0^D(N)/W with W <= W_0(D,N) have no involutions 
+// other than the Atkin--Lehner involutions 
+load "no_involution_star_pairs_10k.m";
 
 
 // Hall_Divisors : given positive integer N, returns sequence of all Hall Divisors d || N. 
@@ -70,13 +75,13 @@ for pair in tetragonal_candidates do
         // involing AL quotients. For this, it is helpful to note which quotients
         // X_0^D(N)/<w_{m1}> are not hyperelliptic
 
-        // If we know X_0^D(N) has only Atkin--Lehner involutions, then no curve
+        // If we know X_0^D(N)^* has only Atkin--Lehner involutions, then no curve
         // X_0^D(N)/<w_{m1}> can be hyperelliptic (as then it would be hyperelliptic
         // by an Atkin--Lehner involution, and X_0^D(N) would have been realized as 
         // being tetragonal in the above parts).
         // Otherwise, we determine curves X_0^D(N)/<w_{m1}> which are not geometrically 
         // hyperelliptic via a CS check involving a further AL quotient
-        if not (pair in all_atkin_lehner_10k) then 
+        if not (pair in no_involution_star_pairs_10k) then 
             for m1 in [m1 : m1 in HD | m1 gt 1] do 
                 g1 := quot_genus(D,N,[1,m1]);
                 g2 := Min([quot_genus(D,N,gens_to_identifier(D*N,{m1,m2})) : m2 in HD | (m2 ne 1) and (m2 ne m1)]);
@@ -265,14 +270,14 @@ end for;
 
 not_geom_tetragonal_by_bihyperelliptic_lemma_2 := [];
 
-// If N is squarefree, we know all automorphisms are Atkin--Lehner, and g(X_0^D(N)) > 9, 
-// then we know X_0^D(N) is geom. tetragonal iff it has a geom. bi-hyperelliptic Atkin-Lehner
-// involution. Since all involutions of X_0^D(N)/<w_m> are Atkin--Lehner for any m||DN,
-// we cannot We use point counts and Hasegawa's criterion to test each such involution. 
+// If N is squarefree, we know all automorphisms of X_0^D(N) are Atkin--Lehner, 
+// and g(X_0^D(N)) > 9, then we know X_0^D(N) is geom. tetragonal iff it has a geom. 
+// hyperelliptic Atkin-Lehner quotient X_0^D(N)/<w_m>.
+// We use point counts and Hasegawa's criterion to test each such involution. 
 
 // first, we add some remaining pairs (D,N) with D*N even or X_0^D(N)^* of genus
 // less than 2 for which the results of 
-// Kontogeorgis--Rotger suffice to prove all automorphisms are Atkin--Lehner.
+// Kontogeorgis--Rotger suffice to prove all automorphisms of X_0^D(N) are Atkin--Lehner.
 Append(~all_atkin_lehner_10k,[6,73]);
 Append(~all_atkin_lehner_10k,[34,13]);
 Append(~all_atkin_lehner_10k,[55,3]);
@@ -288,11 +293,66 @@ for pair in [pair : pair in remaining_geom_tetragonal_candidates | pair in all_a
     N := pair[2];
     HD := [m : m in Hall_Divisors(D*N) | m gt 1];
     g := genus(D,N); 
+    DNprimes := PrimeDivisors(D*N);
 
-    if g ge 10 then        
-        Append(~not_geom_tetragonal_by_bihyperelliptic_lemma_2,pair);
-        Exclude(~remaining_tetragonal_candidates,pair);
-        Exclude(~remaining_geom_tetragonal_candidates,pair);
+    if g ge 10 then  
+        
+        for m1 in [m1 : m1 in HD | m1 gt 1] do 
+            g1 := quot_genus(D,N,[1,m1]);
+            g2 := Min([quot_genus(D,N,gens_to_identifier(D*N,{m1,m2})) : m2 in HD | (m2 ne 1) and (m2 ne m1)]);
+            assert g2 gt 0; // this should go through via g_4quot_min check 
+            if g1 le 2*g2 + 1 then // CS check required to be hyperelliptic via non-Atkin-Lehner involution
+                // CS check did not succeed, so we further check using the Hasegawa criterion to 
+                // try to rule out the possibility of X_0^D(N)/<w_{m1}> being hyperelliptic
+                if (Integers()!(g1) mod 2 eq 0) then 
+                    gbar := [Integers()!(g1/2)];
+                else 
+                    gbar := [Integers()!((g1-1)/2),Integers()!((g1+1)/2)];
+                end if; 
+
+                Hasegawa_check := true; // check will remain true if criterion for being geom hyperelliptic is passed
+
+                for m2 in [m2 : m2 in HD | (m2 gt 1) and (m2 ne m1)] do
+                    g2 := quot_genus(D,N,gens_to_identifier(D*N,{m1,m2}));
+                    if not (g2 in gbar) then 
+                        Hasegawa_check := false;
+                        break;
+                    end if;
+                end for;
+
+                if Hasegawa_check eq true then // If Hasegawa check required to be hyperelliptic goes through,
+                                                // we try to use finite field point counts to rule out X_0^D(N)/<w_{m1}> 
+                                                // being hyperelliptic
+
+                    point_count_check := true; // check will remain true if criterion for being geom hyperelliptic is passed
+
+                    m1_list := [Index(DNprimes,p) : p in PrimeDivisors(m1)];
+                    for p in [p : p in PrimesUpTo(23) | not (p in DNprimes)] do // primes of good reduction for X_0^D(N)/<w_m1>. Increasing this to 100 seems to give no benefit
+                        g, counts := shipoints(p, D, N, traces_to_forms(dataByLevel, p, D, N) : ALprimes:=[Seqset(m1_list)], m:=2, eps:=3);
+                        for r in [1,2] do
+                            point_count := counts[r];
+                            if point_count gt 2*p^r+2 then 
+                                point_count_check := false;
+                                break;
+                            end if;
+                        end for;
+                    end for; 
+
+                    if point_count_check eq true then 
+                        Append(~hypell_simple_quotient_candidates,[D,N,m1]);
+                    end if; 
+                end if;
+            end if;
+
+        end for;
+
+        // If all X_0^D(N)/<w_m> are provably not geometrically hyperelliptic, 
+        // then we are done. 
+        if IsEmpty(hypell_simple_quotient_candidates) then 
+            Append(~not_geom_tetragonal_by_bihyperelliptic_lemma_2,pair);
+            Exclude(~remaining_tetragonal_candidates,pair);
+            Exclude(~remaining_geom_tetragonal_candidates,pair);
+        end if; 
     end if; 
 end for; 
 
@@ -1028,7 +1088,7 @@ end for;
 
     // SetOutputFile("table_remaining_geom_tetragonal_candidates.m");
 
-    // for i in [1..3] do 
+    // for i in [1..7] do 
     //     for j in [1..3] do
     //         pair := remaining_geom_tetragonal_candidates[3*(i-1)+j];
     //         D := pair[1];
@@ -1044,14 +1104,6 @@ end for;
     //         end if;
     //     end for;
     // end for; 
-
-    // // final row, 1 entry 
-    // curve_info := remaining_geom_tetragonal_candidates[10];
-    // D := pair[1];
-    // N := pair[2];
-    // g := genus(D,N); 
-    // print "$ (";
-    // print D, ",", N, ")$ & $ ", g, "$ & & & & \\\\ \\hline";
 
     // UnsetOutputFile();
 

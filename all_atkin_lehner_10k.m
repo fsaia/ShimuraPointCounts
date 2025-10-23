@@ -1,6 +1,6 @@
 // List of all 4718 of the 4830 pairs (D,N) with D>1 an indefinite quaternion discriminant, N
 // a positive integer which is squarefree and coprime to D, D*N odd, and DN < 10000 for which
-// we have proven that all automorphisms of X_0^D(N)/W are Atkin--Lehner for each W <= W_0(D,N).
+// we have proven that all automorphisms of X_0^D(N) are Atkin--Lehner.
 
 // Time taken 925.050
 
