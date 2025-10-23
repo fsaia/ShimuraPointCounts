@@ -31,7 +31,7 @@ Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura
 
 - `no_involution_star_pairs_10k.m`: List of all $4378$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we prove that $X_0^D(N)^*$ has no non-trivial involutions using point counts with the result of González. Computed in `aut_checks.m`.
 
-- `unknown_aut_pairs_stars_10k.m`: List of all $452$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have not yet determined whether $X_0^D(N)^*$ has a non-trivial involution. Computed in `aut_checks.m`.
+- `unknown_aut_star_pairs_10k.m`: List of all $452$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have not yet determined whether $X_0^D(N)^*$ has a non-trivial involution. Computed in `aut_checks.m`.
 
 - `all_atkin_lehner_10k.m`: List of all $4718$ of the $4830$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $DN$ odd, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)$ are Atkin--Lehner. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.
 
