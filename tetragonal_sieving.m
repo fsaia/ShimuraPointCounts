@@ -273,20 +273,21 @@ not_geom_tetragonal_by_bihyperelliptic_lemma_2 := [];
 // If N is squarefree, we know all automorphisms of X_0^D(N) are Atkin--Lehner, 
 // and g(X_0^D(N)) > 9, then we know X_0^D(N) is geom. tetragonal iff it has a geom. 
 // hyperelliptic Atkin-Lehner quotient X_0^D(N)/<w_m>.
-// We use point counts and Hasegawa's criterion to test each such involution. 
+// We use point counts and Hasegawa's criterion to test each such quotient. 
 
-// first, we add some remaining pairs (D,N) with D*N even or X_0^D(N)^* of genus
-// less than 2 for which the results of 
+// first, we add some remaining pairs (D,N) with X_0^D(N)^* of genus
+// less than 2 and N squarefree for which the results of 
 // Kontogeorgis--Rotger suffice to prove all automorphisms of X_0^D(N) are Atkin--Lehner.
 Append(~all_atkin_lehner_10k,[6,73]);
 Append(~all_atkin_lehner_10k,[34,13]);
+Append(~all_atkin_lehner_10k,[38,5]);
 Append(~all_atkin_lehner_10k,[55,3]);
 Append(~all_atkin_lehner_10k,[69,2]);
 Append(~all_atkin_lehner_10k,[94,3]);
+Append(~all_atkin_lehner_10k,[214,1]);
+Append(~all_atkin_lehner_10k,[226,1]);
 Append(~all_atkin_lehner_10k,[262,1]);
 Append(~all_atkin_lehner_10k,[298,1]);
-Append(~all_atkin_lehner_10k,[358,1]);
-Append(~all_atkin_lehner_10k,[382,1]);
 
 for pair in [pair : pair in remaining_geom_tetragonal_candidates | pair in all_atkin_lehner_10k] do 
     D := pair[1];
@@ -296,6 +297,8 @@ for pair in [pair : pair in remaining_geom_tetragonal_candidates | pair in all_a
     DNprimes := PrimeDivisors(D*N);
 
     if g ge 10 then  
+
+        hypell_simple_quotient_candidates := [];
         
         for m1 in [m1 : m1 in HD | m1 gt 1] do 
             g1 := quot_genus(D,N,[1,m1]);
@@ -814,7 +817,6 @@ end for;
 // print ";";
 // UnsetOutputFile();
 
-
 // SetOutputFile("tetragonal_pairs.m");
 // tetragonal_pairs := [pair : pair in tetragonal_candidates | (((pair in tetragonal_by_hyperelliptic) or (pair in tetragonal_by_bielliptic)) or (pair in tetragonal_by_CM)) or (pair in tetragonal_by_2_to_hyperelliptic)];
 // Append(~tetragonal_pairs,[10,9]);
@@ -1086,26 +1088,34 @@ end for;
 
 // Remaining geometrically tetragonal candidates
 
-    // SetOutputFile("table_remaining_geom_tetragonal_candidates.m");
+// SetOutputFile("table_remaining_geom_tetragonal_candidates.m");
 
-    // for i in [1..7] do 
-    //     for j in [1..3] do
-    //         pair := remaining_geom_tetragonal_candidates[3*(i-1)+j];
-    //         D := pair[1];
-    //         N := pair[2];
-    //         g := genus(D,N); 
-    //         print "$ (";
-    //         print D, ",", N, ")$ & $", g, "$";
+// for i in [1..5] do 
+//     for j in [1..3] do
+//         pair := remaining_geom_tetragonal_candidates[3*(i-1)+j];
+//         D := pair[1];
+//         N := pair[2];
+//         g := genus(D,N); 
+//         print "$ (";
+//         print D, ",", N, ")$ & $", g, "$";
 
-    //         if j eq 3 then 
-    //             print "\\\\ \\hline";
-    //         else 
-    //             print " & "; 
-    //         end if;
-    //     end for;
-    // end for; 
+//         if j eq 3 then 
+//             print "\\\\ \\hline";
+//         else 
+//             print " & "; 
+//         end if;
+//     end for;
+// end for; 
 
-    // UnsetOutputFile();
+// // last row, one entry
+// pair := remaining_geom_tetragonal_candidates[16];
+// D := pair[1];
+// N := pair[2];
+// g := genus(D,N); 
+// print "$ (";
+// print D, ",", N, ")$ & $", g, "$ & & & & \\\\ \\hline";
+
+// UnsetOutputFile();
 
 
 // Remaining tetragonal candidates
