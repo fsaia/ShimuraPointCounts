@@ -12,44 +12,54 @@ end function;
 
 
 // no_involutions: uses a crtierion of Gonzalez (Equation 2.2 in "Constaints on the automorphism
-// group of a curve", 2017) to check if X_0^D(N)^* = X_0^D(N)/W_0(D,N) could have an involution
-// using point counts over the finite fields F_{2^i}. Outputs "true" if this curve
-// provably has no involutions. The output "false" gives no information. 
-// The parameter m determines the largest cardinality 2^m finite field used in the check.
+// group of a curve", 2017) to check if X_0^D(N)^* = X_0^D(N)/W_0(D,N) (of genus g>1) 
+// could have an involution using point counts over finite fields F_{p^i}
+// with p a prime of good reduction for X_0^D(N) (and hence of X_0^D(N)^*). 
+// Outputs "true" if this curve provably has no involutions. The output "false" 
+// gives no information. The parameter pmax determines the largest prime p to use
+// in the arguments, and the parameter imax determines the largest power p^{imax} 
+// to use in the check for each prime p. 
 
-// Note: currently restricted to the case N=1, D = p*q (I'm not sure of the syntax to get the 
-// point count specifically for the full quotient otherwise). 
+no_involutions := function(D,N,pmax,imax)
 
-no_involutions := function(D,N,imax)
-
-    assert D*N mod 2 eq 1;
+    proven_no_involutions := false; // initializing check 
+    DN_primes := PrimeDivisors(D*N);
     star_gens := [{i} : i in [1..#PrimeDivisors(D*N)]];
+    // assert quot_genus(D,N,HallDivisors(D*N)) ge 2 // check on genus, which we do not recheck in our application
 
-    gstar, counts := shipoints(2, D, N, traces_to_forms(dataByLevel, 2, D, N) : ALprimes:=star_gens, m:=imax, eps:=3);
-    assert g_star ge 2;
-    sum_upper_bound := 2*g_star+2; 
+    for p in [p : p in PrimesUpTo(pmax) | not (p in DN_primes)] do 
+        gstar, counts := shipoints(p, D, N, traces_to_forms(dataByLevel, p, D, N) : ALprimes:=star_gens, m:=imax, eps:=3);
+        sum_upper_bound := 2*gstar+2; 
 
-    Ai_list := []; // initializing list, to contain counts |A_i| for i odd, 1 <= i <= imax
+        Ai_list := []; // initializing list, to contain counts |A_i| for i odd, 1 <= i <= imax
 
-    for i in [i : i in [1..imax] | i mod 2 eq 1] do
-        Ai := counts[i]; // number of points over F_{q^i}
-        for j in [j : j in Divisors(i) | j lt i]  do
-            Ai := Ai-Ai_list[Integers()!((j+1)/2)]; // subtracting from Ai as needed to get number of points over F_{q^i}
-                                      // which don't live over F_{q^j} for some j<i. 
-        end for;
-        Append(~Ai_list,Ai); 
+        // taking relevant point counts over F_{p^i} with i coprime to 2
+        for i in [i : i in [1..imax] | i mod 2 eq 1] do
+            Ai := counts[i]; // number of points over F_{q^i}
+            for j in [j : j in Divisors(i) | j lt i]  do
+                Ai := Ai-Ai_list[Integers()!((j+1)/2)]; // subtracting from Ai as needed to get number of points over F_{q^i}
+                                          // which don't live over F_{q^j} for some j<i. 
+            end for;
+            Append(~Ai_list,Ai); 
+        end for; 
+
+        sum := 0;
+
+        for k in [k : k in [1..#Ai_list] | Ai_list[k] mod 2 eq 1] do
+            sum := sum + (2*k-1);  // getting left-hand side of Gonzalez's Equation 2.2, summing up to n=imax. 
+        end for; 
+
+        if sum gt sum_upper_bound then
+            proven_no_involutions := true; 
+            break;
+        end if;
+
     end for; 
 
-    sum := 0;
-
-    for k in [k : k in [1..#Ai_list] | Ai_list[k] mod 2 eq 1] do
-        sum := sum + (2*k-1);  // getting left-hand side of Gonzalez's Equation 2.2, summing up to n=imax. 
-    end for; 
-
-    if sum gt sum_upper_bound then
+    if proven_no_involutions then 
         return true;
     else
-        return false; 
+        return false;
     end if;
 
 end function;
@@ -107,7 +117,8 @@ all_atkin_lehner_KR := function(D,N)
     // if previous checks didn't succeed, try KR Thm 1.7 (iii) with point counts over
     // F_{p} for p prime up to 100 not dividing 2*D*N
     for p in [p : p in PrimesUpTo(100) | (p ne 2) and (not ((p in [pair[1] : pair in F_D]) or (p in [pair[1] : pair in F_N])))] do // odd primes up to 100 of good red'n for X_0^D(N)
-            if r eq Valuation(shiALpoints(p,1,D,N,[]),2)+1 then 
+            gstar, counts := shipoints(p, D, N, traces_to_forms(dataByLevel, p, D, N) : ALprimes:=[], m:=1, eps:=3);
+            if r eq Valuation(counts[1],2)+1 then 
                 return true;
             end if; 
     end for;
