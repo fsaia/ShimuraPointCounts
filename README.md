@@ -46,3 +46,15 @@ Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura
 - `geom_tetragonal_pairs.m`: List of all $161$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is geometrically tetragonal. If $X_0^D(N)$ is geometrically tetragonal and is not in this list, then $(D,N)$ must be among the $16$ pairs listed in the file `remaining_geom_tetragonal_candidates.m`.
 
 - `tetragonal_pairs.m`: List of all $141$ pairs $(D,N)$ for which we prove $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. If $X_0^D(N)$ is tetragonal over $\mathbb{Q}$ and is not in this list, then $(D,N)$ must be among the $27$ pairs listed in the file `remaining_tetragonal_candidates.m`.
+
+
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
