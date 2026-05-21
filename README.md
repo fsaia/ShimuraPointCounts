@@ -7,6 +7,10 @@ Magma code for the paper *Point counts, automorphisms, and gonalities of Shimura
 
 - `examples.m`: This file contains examples displaying the use of the main point-counts function `shipoints` and the function `shiweil` for computing Weil polynomials defined in the file `counting_points.m`. 
 
+- `traces10k.m`: Data of traces of action of Hecke operators for levels up to $1433$ from the LMFDB. This file data may be used in the main function in `counting_points.m`.
+
+- `tracesALL.m`: Data of traces of action of Hecke operators for levels up to $10000$ from the LMFDB. This file data may be used in the main function in `counting_points.m`.
+ 
 - `aut_checks.m`: Code with checks on the automorphism group of curves $X_0^D(N)$, and their Atkin--Lehner quotients, having genus $g>1$ and $D>1$. The main functions are `no_involutions.m`, which assumes $DN$ is even and uses point counts to attempt a sufficient check for $X_0^D(N)^*$ to have no involutions in its automorphism group, and `all_atkin_lehner_KR`, which assumes $N$ is squarefree and coprime to $D$ and uses point counts and results of Kontogeorgis--Rotger to prove that all non-trivial automorphisms of $X_0^D(N)$ are Atkin--Lehner involutions. This file requires `counting_points.m` if using these two main functions. Note that the full strength of our main theorem on Automorphism groups of $X_0^D(N)$ and its Atkin--Lehner quotients relies on loading in a large amount of pre-computed data on Hecke traces available on the LMFDB, which we do not include here, for a reasonable computation time. 
 
 - `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus.
