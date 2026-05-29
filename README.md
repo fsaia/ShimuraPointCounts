@@ -34,7 +34,7 @@ This directory contains code relevant to proving Theorem 1.3 in our paper (see a
 
 This directory contains code relevant to proving Theorem 1.5 in our paper (see also Section 6). To run all of these checks, one will need the files from the Point Counts directory, the file `no_involution_star_pairs_10k.m` from the Automorphisms directory, and all files from the Auxiliary Files directory.
 
-- `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus. This corresponds to the discussion between Lemma 6.14 and Proposition 6.15 in our paper.  
+- `tetragonal_checks.m`: Initial code for narrowing candidates $X_0^D(N)$ for being geometrically tetragonal using genus computations and Abramovich's linear lower bound on the gonality of $X_0^D(N)$ in terms of its genus. This corresponds to the discussion between Lemma 6.15 and Proposition 6.16 in our paper.  
 
 - `tetragonal_candidates.m`: List of all $516$ geometrically tetragonal candidate pairs computed in `tetragonal_checks.m`. This file is needed in `tetragonal_sieving.m`.  
 
