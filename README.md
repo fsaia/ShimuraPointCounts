@@ -25,9 +25,9 @@ This directory contains code relevant to proving Theorem 1.3 in our paper (see a
 
 - `unknown_aut_star_pairs_10k.m`: List of all $1321$ of the $10609$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $g(X_0^D(N)^*) > 2$, and $DN < 10000$ for which we do not determine in this work whether $X_0^D(N)^*$ has a non-trivial involution. Computed in `aut_checks.m`.  
 
-- `all_atkin_lehner_10k.m`: List of all $10597$ of the $10609$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $g(X_0^D(N)^*) > 2$, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)$ are Atkin--Lehner. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.
+- `all_atkin_lehner_10k.m`: List of all $10597$ of the $10609$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $g(X_0^D(N)^*) > 2$, and $DN < 10000$ for which we have proven that all automorphisms of $X_0^D(N)$ are Atkin--Lehner. Computed in `aut_checks.m`. This file is needed for `tetragonal_sieving.m`.  
 
-- `unknown_aut_pairs_10k.m`: List of all $12$ of the $10609$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant, $N$ a positive integer which is squarefree and coprime to $D$, $g(X_0^D(N)^*) > 2$, and $DN < 10000$ for which we do not prove in this work whether $X_0^D(N)$ has a non-Atkin--Lehner involution. Computed in `aut_checks.m`.  
+- `unknown_aut_pairs_10k.m`: List of all $12$ of the $10609$ pairs $(D,N)$ with $D>1$ an indefinite quaternion discriminant over $\mathbb{Q}$, $N$ a positive integer which is squarefree and coprime to $D$, $g(X_0^D(N)^*) > 2$, and $DN < 10000$ for which we do not prove in this work whether $X_0^D(N)$ has a non-Atkin--Lehner involution. Computed in `aut_checks.m`.  
 
 
 ## Tetragonals
