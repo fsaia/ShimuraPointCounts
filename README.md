@@ -40,7 +40,7 @@ This directory contains code relevant to proving Theorem 1.5 in our paper (see a
 
 - `tetragonal_sieving.m`: We use various information and techniques (including genus computations, known gonalities, Castelnuovo--Severi arguments, finite field point counts, checks on automorphism groups, and checks for rational CM points on Atkin--Lehner quotients) to narrow the tetragonal candidates listed in `tetragonal_candidates.m`, either by identifying them as tetragonal (over $\mathbb{Q}$ or geometrically) or proving they are not tetragonal (over $\mathbb{Q}$ or geometrically). This file accounts for the remainder of the proof of Theorem 1.5, with the majority of the code implementing the checks discussed in detail in Proposition 6.15. Note: For the point count checks using the `shipoints` function from `counting_points.m`, one must either load in a file containing pre-computed trace data for the `forms` input (currently loaded in as `traces10k.m` in this file) or must instead adjust the `shipoints` evaluations herein to compute the necessary data from scratch using the `prepare_forms` function in `counting_points.m`.  
 
-- `remaining_geom_tetragonal_candidates.m`: All $32$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`.  
+- `remaining_geom_tetragonal_candidates.m`: All $29$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is geometrically tetragonal. This list is computed in `tetragonal_sieving.m`.  
 
 - `remaining_tetragonal_candidates.m`: All $32$ coprime pairs $(D,N)$ with $D>1$ for which we remain unsure of whether $X_0^D(N)$ is tetragonal over $\mathbb{Q}$. This list is computed in `tetragonal_sieving.m`.
 
